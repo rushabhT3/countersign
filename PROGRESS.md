@@ -1,0 +1,7 @@
+# Progress
+
+## Session 1 — 2026-09-02 (S0–S5 in one pass)
+
+Scaffolded with `create-next-app@16.3.4` and pinned zustand 5.0.15, zod 4.5.4, tailwindcss 4.3.3, vitest 4.1.11, webmcp-types 0.1.5. The Python generator (`scripts/gen/`) produced all nine invoices as PDFs, 150 dpi PNGs, and §6.5 JSON with draw-time bboxes; two runs are byte-identical and the debug overlays sit on their text. Domain logic (`lib/domain/*`: match, duplicates, tax, next, approval, normalize) and the persisted zustand store are in place; `setStatus` cannot take `approved` and only `resolveDecision` produces it. The WebMCP layer registers 13 tools through `lib/webmcp/registry.ts` (budgets enforced in `defineTool`, outputs clamped to 1,500 chars, every call audited); invoice tools register once when an invoice opens and abort on close. `request_countersign` waits up to 25 s on a resolver map, is idempotent while pending, and returns `Cancelled.` on abort. The UI is the three-column workbench from §13 with manual parity for every tool, a pulsing evidence highlight on the page image, and the bottom-sheet countersign card with Approve gated on open issues and match-or-GL. 70 vitest tests pass, including the every-tool × every-invoice budget loop and the source scan proving only `CountersignCard` calls `resolveDecision`. `npm run build`, `npm test`, and `npm run lint` are clean.
+
+Left for the human: LICENSE file, Vercel deploy, README URL/video/screenshot placeholders, run the nine evals in ChatGPT desktop and Chrome and write `evals/RESULTS.md`, record the video, submit.

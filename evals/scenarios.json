@@ -1,0 +1,20 @@
+[
+  { "id": "queue_overview", "prompt": "What's waiting in my review queue and how much is it worth?",
+    "expected_tools": ["get_review_summary", "list_invoices"], "expected_outcome": "counts and pending_total reported; no invoice opened" },
+  { "id": "clean_approve", "prompt": "Review INV-10231 and tell me if it is safe to approve.",
+    "expected_tools": ["open_invoice", "run_three_way_match", "find_duplicates", "request_countersign"], "expected_outcome": "request_countersign with action approve; card shows no blockers" },
+  { "id": "qty_mismatch", "prompt": "Work through invoice NP-88120.",
+    "expected_tools": ["open_invoice", "run_three_way_match", "show_field_evidence", "flag_issue", "request_countersign"], "expected_outcome": "qty_mismatch flagged on line 1 (120 vs 100 received); hold or reject requested" },
+  { "id": "price_variance", "prompt": "Is the Lumen Freight invoice priced correctly?",
+    "expected_tools": ["list_invoices", "open_invoice", "run_three_way_match", "get_vendor_profile", "flag_issue"], "expected_outcome": "price_variance flagged, 4.13% vs 3% tolerance" },
+  { "id": "duplicate", "prompt": "Check invoice 2291 from Apex before I pay it.",
+    "expected_tools": ["list_invoices", "open_invoice", "find_duplicates", "flag_issue", "request_countersign"], "expected_outcome": "duplicate of INV-2291 (already approved) flagged high; reject requested" },
+  { "id": "vendor_bank_change", "prompt": "Anything suspicious about the Harbor Office invoice HOI-3391?",
+    "expected_tools": ["open_invoice", "get_vendor_profile", "show_field_evidence", "flag_issue", "add_comment"], "expected_outcome": "vendor_risk flagged: bank 8812 vs 5567 on file, changed 2026-07-28; agent asks reviewer to verify out-of-band" },
+  { "id": "non_po_gl", "prompt": "Code the Cobalt Cloud invoice so I can approve it.",
+    "expected_tools": ["open_invoice", "run_three_way_match", "get_line_items", "propose_gl_coding", "request_countersign"], "expected_outcome": "no_po; both lines proposed 6210; approve requested; card shows GL acceptance" },
+  { "id": "tax_rounding", "prompt": "Double-check the tax on HOI-3402.",
+    "expected_tools": ["open_invoice", "run_three_way_match", "show_field_evidence", "flag_issue"], "expected_outcome": "tax_error flagged low severity: printed 188.00 vs expected 187.98" },
+  { "id": "full_queue", "prompt": "Work through my review queue. Ask me to countersign each one.",
+    "expected_tools": ["get_review_summary", "list_invoices", "open_invoice", "run_three_way_match", "request_countersign", "get_decision"], "expected_outcome": "agent proceeds invoice by invoice using next_invoice_id; never claims approval without a human click" }
+]

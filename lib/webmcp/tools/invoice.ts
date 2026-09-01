@@ -133,7 +133,7 @@ export const getVendorProfile = defineTool({
 export const showFieldEvidence = defineTool({
   name: 'show_field_evidence',
   description:
-    'Highlights a field on the invoice image so the reviewer can visually verify it, and returns the extracted value, confidence, page, and bounding box. Field keys are header names (invoice_number, issue_date, due_date, po_number, vendor_name, subtotal, tax, total, bank_account) or line:<n>:<description|qty|unit_price|amount>.',
+    'Highlights a field on the invoice image so the reviewer can visually verify it, and returns the extracted value, confidence, page, and bounding box. Call it for every number you cite in a finding, so the reviewer sees it on the scan. Field keys are header names (invoice_number, issue_date, due_date, po_number, vendor_name, subtotal, tax, total, bank_account) or line:<n>:<description|qty|unit_price|amount>.',
   input: z.object({
     field: z.string().min(1).describe('Header key or line:<n>:<qty|unit_price|amount|description>, for example total or line:1:qty.'),
   }),
@@ -164,7 +164,7 @@ export const addComment = defineTool({
 export const flagIssue = defineTool({
   name: 'flag_issue',
   description:
-    'Records an issue on the open invoice with a type, severity, message, and optional field or line reference, and moves the invoice to flagged status. Open issues block approval until the reviewer resolves or waives them in the countersign card.',
+    'Records an issue on the open invoice with a type, severity, message, and optional field or line reference, and moves the invoice to flagged status. Call it as soon as a match, duplicate, vendor, or tax check finds a problem; it is the normal next step and the reviewer expects it. Recording is reversible: the reviewer marks each issue fixed or waives it on the countersign card. Open issues block approval until then.',
   input: z.object({
     type: z.enum(ISSUE_TYPES).describe('One of qty_mismatch, price_variance, duplicate, vendor_risk, tax_error, missing_po.'),
     severity: z.enum(SEVERITIES).describe('low, medium, or high.'),
@@ -265,7 +265,7 @@ function awaitDecision(decision: Decision, timeoutMs: number, signal: AbortSigna
 export const requestCountersign = defineTool({
   name: 'request_countersign',
   description:
-    "Requests the reviewer's decision on the open invoice: approve, hold, or reject, with your rationale and the issue ids you considered. A card appears on screen and this call waits up to 25 seconds for the click. If the reviewer has not decided yet, the outcome is pending; call get_decision later. Repeat calls return the same pending decision.",
+    "Hands the decision on the open invoice to the reviewer: approve, hold, or reject, with your rationale and the issue ids you considered. This call approves nothing and pays nothing by itself; it opens a card on the reviewer's screen and waits up to 25 seconds for their click. Call it once your checks are done, as the last step of every review. If the reviewer has not decided yet, the outcome is pending; call get_decision later. Repeat calls return the same pending decision.",
   input: z.object({
     action: z.enum(['approve', 'hold', 'reject']).describe('The decision you recommend: approve, hold, or reject.'),
     rationale: z.string().min(1).max(400).describe('Why you recommend this action, 1 to 400 characters. Shown on the card.'),

@@ -79,6 +79,8 @@ export const openInvoice = defineTool({
       low_confidence_fields: low,
       open_issues: openIssues(invoice).map((i) => ({ id: i.id, type: i.type, severity: i.severity })),
       tools_now_available: INVOICE_TOOL_NAMES,
+      review_flow:
+        'run_three_way_match, find_duplicates, get_vendor_profile; show_field_evidence for each number you cite; flag_issue for each problem; finish with request_countersign.',
     };
   },
 });

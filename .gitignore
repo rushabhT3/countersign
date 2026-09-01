@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generator artifacts
+/scripts/gen/out/
+__pycache__/

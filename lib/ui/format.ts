@@ -1,3 +1,5 @@
+import type { LineVerdict } from '@/lib/domain/match';
+
 const currencyFormatters = new Map<string, Intl.NumberFormat>();
 
 export function money(amount: number, currency = 'USD'): string {
@@ -27,4 +29,16 @@ export function humanize(key: string): string {
 
 export function statusLabel(status: string): string {
   return status === 'needs_review' ? 'to review' : status;
+}
+
+const VERDICT_LABELS: Record<LineVerdict, string> = {
+  ok: 'ok',
+  qty_over_received: 'qty > received',
+  qty_over_ordered: 'qty > ordered',
+  price_over_tolerance: 'price > tolerance',
+  line_not_on_po: 'not on PO',
+};
+
+export function verdictLabel(verdict: LineVerdict): string {
+  return VERDICT_LABELS[verdict];
 }

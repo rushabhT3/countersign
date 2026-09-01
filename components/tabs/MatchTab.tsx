@@ -5,7 +5,7 @@ import type { MatchResult, MatchTotals } from '@/lib/domain/match';
 import type { DuplicateCandidate } from '@/lib/domain/duplicates';
 import { Chip } from '@/components/Chip';
 import { outcomeTone, statusTone, verdictTone } from '@/lib/ui/tones';
-import { humanize, money, statusLabel } from '@/lib/ui/format';
+import { humanize, money, statusLabel, verdictLabel } from '@/lib/ui/format';
 import { findDuplicatesAsHuman, runMatchAsHuman } from '@/lib/ui/manual';
 
 export interface MatchTabProps {
@@ -60,37 +60,39 @@ function MatchDetails({ result, currency }: { result: MatchResult; currency: str
         </div>
       </div>
       {result.lines.length > 0 && (
-        <table className="w-full text-xs">
-          <thead className="bg-panel-muted text-left text-[11px] uppercase tracking-wider text-ink-muted">
-            <tr>
-              <th className="px-2 py-1.5 font-medium">#</th>
-              <th className="px-2 py-1.5 text-right font-medium">Inv</th>
-              <th className="px-2 py-1.5 text-right font-medium">Ord</th>
-              <th className="px-2 py-1.5 text-right font-medium">Rcvd</th>
-              <th className="px-2 py-1.5 text-right font-medium whitespace-nowrap">Price/PO</th>
-              <th className="px-2 py-1.5 text-right font-medium">Var</th>
-              <th className="px-2 py-1.5 font-medium">Verdict</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-line">
-            {result.lines.map((line) => (
-              <tr key={line.line}>
-                <td className="px-2 py-1.5 text-ink-muted">{line.line}</td>
-                <td className="px-2 py-1.5 text-right tabular-nums">{line.qty_invoiced}</td>
-                <td className="px-2 py-1.5 text-right tabular-nums">{line.qty_ordered ?? '—'}</td>
-                <td className="px-2 py-1.5 text-right tabular-nums">{line.qty_received ?? '—'}</td>
-                <td className="px-2 py-1.5 text-right tabular-nums whitespace-nowrap">
-                  {money(line.unit_price, currency)}
-                  <span className="text-ink-faint"> / {line.po_unit_price === null ? '—' : money(line.po_unit_price, currency)}</span>
-                </td>
-                <td className="px-2 py-1.5 text-right tabular-nums">{variance(line.price_variance_pct)}</td>
-                <td className="px-2 py-1.5">
-                  <Chip tone={verdictTone(line.verdict)}>{humanize(line.verdict)}</Chip>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead className="bg-panel-muted text-left text-[11px] uppercase tracking-wider text-ink-muted">
+              <tr>
+                <th className="px-2 py-1.5 font-medium">#</th>
+                <th className="px-2 py-1.5 text-right font-medium">Inv</th>
+                <th className="px-2 py-1.5 text-right font-medium">Ord</th>
+                <th className="px-2 py-1.5 text-right font-medium">Rcvd</th>
+                <th className="px-2 py-1.5 text-right font-medium whitespace-nowrap">Price/PO</th>
+                <th className="px-2 py-1.5 text-right font-medium">Var</th>
+                <th className="px-2 py-1.5 font-medium">Verdict</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-line">
+              {result.lines.map((line) => (
+                <tr key={line.line}>
+                  <td className="px-2 py-1.5 text-ink-muted">{line.line}</td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">{line.qty_invoiced}</td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">{line.qty_ordered ?? '—'}</td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">{line.qty_received ?? '—'}</td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">
+                    <div>{money(line.unit_price, currency)}</div>
+                    <div className="text-ink-faint">PO {line.po_unit_price === null ? '—' : money(line.po_unit_price, currency)}</div>
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">{variance(line.price_variance_pct)}</td>
+                  <td className="px-2 py-1.5">
+                    <Chip tone={verdictTone(line.verdict)}>{verdictLabel(line.verdict)}</Chip>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <h3 className={`${SECTION} border-t border-line`}>Totals</h3>
       <TotalsBlock totals={result.totals} currency={currency} />

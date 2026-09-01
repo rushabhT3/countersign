@@ -6,7 +6,7 @@ The agent opens an invoice, runs a three-way match, hunts for duplicates, checks
 
 ![Countersign workbench: the agent highlighted the quantity cell on NP-88120 after the three-way match flagged it](docs/highlight.png)
 
-- **Live:** _add the Vercel URL_
+- **Live:** https://countersign-theta.vercel.app
 - **Video:** _add the YouTube link_
 - Built for [The WebMCP Challenge](https://webmcp.devpost.com) (OpenAI × Devpost), September 2026.
 

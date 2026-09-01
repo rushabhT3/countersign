@@ -1,0 +1,199 @@
+{
+  "id": "inv_007",
+  "invoice_number": "NP-88131",
+  "vendor_id": "ven_northwind",
+  "vendor_name_on_doc": "Northwind Packaging Co.",
+  "issue_date": "2026-08-21",
+  "due_date": "2026-10-05",
+  "currency": "USD",
+  "po_number": "PO-44725",
+  "subtotal": 3300.0,
+  "tax": 264.0,
+  "total": 3564.0,
+  "bank_account_last4_on_doc": "9083",
+  "initial_status": "needs_review",
+  "scenario": "clean",
+  "pages": [
+    {
+      "page": 1,
+      "image": "/invoices/inv_007/page-1.png",
+      "width_px": 1275,
+      "height_px": 1650
+    }
+  ],
+  "fields": {
+    "invoice_number": {
+      "value": "NP-88131",
+      "confidence": 0.983,
+      "page": 1,
+      "bbox": [
+        0.8568,
+        0.0884,
+        0.9248,
+        0.1016
+      ]
+    },
+    "issue_date": {
+      "value": "2026-08-21",
+      "confidence": 0.9399,
+      "page": 1,
+      "bbox": [
+        0.8486,
+        0.1136,
+        0.9248,
+        0.1269
+      ]
+    },
+    "due_date": {
+      "value": "2026-10-05",
+      "confidence": 0.9817,
+      "page": 1,
+      "bbox": [
+        0.8486,
+        0.1389,
+        0.9248,
+        0.1521
+      ]
+    },
+    "po_number": {
+      "value": "PO-44725",
+      "confidence": 0.9535,
+      "page": 1,
+      "bbox": [
+        0.8558,
+        0.1641,
+        0.9248,
+        0.1774
+      ]
+    },
+    "vendor_name": {
+      "value": "Northwind Packaging Co.",
+      "confidence": 0.9455,
+      "page": 1,
+      "bbox": [
+        0.0654,
+        0.1121,
+        0.3189,
+        0.1307
+      ]
+    },
+    "subtotal": {
+      "value": "3300.00",
+      "confidence": 0.9784,
+      "page": 1,
+      "bbox": [
+        0.8595,
+        0.4066,
+        0.9248,
+        0.4198
+      ]
+    },
+    "tax": {
+      "value": "264.00",
+      "confidence": 0.9508,
+      "page": 1,
+      "bbox": [
+        0.8717,
+        0.4318,
+        0.9248,
+        0.4451
+      ]
+    },
+    "total": {
+      "value": "3564.00",
+      "confidence": 0.9441,
+      "page": 1,
+      "bbox": [
+        0.8595,
+        0.4571,
+        0.9248,
+        0.4703
+      ]
+    },
+    "bank_account": {
+      "value": "****9083",
+      "confidence": 0.9725,
+      "page": 1,
+      "bbox": [
+        0.1756,
+        0.9114,
+        0.2345,
+        0.9233
+      ]
+    }
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "description": "Corrugated shipper 24x18x16",
+      "qty": 100,
+      "unit": "ea",
+      "unit_price": 22.0,
+      "amount": 2200.0,
+      "confidence": 0.9841,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1013,
+          0.3434,
+          0.2965,
+          0.3567
+        ],
+        "qty": [
+          0.6029,
+          0.3434,
+          0.6275,
+          0.3567
+        ],
+        "unit_price": [
+          0.7557,
+          0.3434,
+          0.8007,
+          0.3567
+        ],
+        "amount": [
+          0.8595,
+          0.3434,
+          0.9248,
+          0.3567
+        ]
+      }
+    },
+    {
+      "line": 2,
+      "description": "Kraft void fill paper, 24 in roll",
+      "qty": 10,
+      "unit": "ea",
+      "unit_price": 110.0,
+      "amount": 1100.0,
+      "confidence": 0.9487,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1013,
+          0.3687,
+          0.3005,
+          0.3819
+        ],
+        "qty": [
+          0.6111,
+          0.3687,
+          0.6275,
+          0.3819
+        ],
+        "unit_price": [
+          0.7475,
+          0.3687,
+          0.8007,
+          0.3819
+        ],
+        "amount": [
+          0.8595,
+          0.3687,
+          0.9248,
+          0.3819
+        ]
+      }
+    }
+  ]
+}

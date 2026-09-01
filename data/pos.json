@@ -1,0 +1,156 @@
+[
+  {
+    "po_number": "PO-44718",
+    "vendor_id": "ven_apex",
+    "issued": "2026-07-30",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "APX-BRK-200",
+        "description": "Steel mounting bracket, 200mm",
+        "qty": 60,
+        "unit_price": 100.0
+      },
+      {
+        "line": 2,
+        "sku": "APX-BLT-M12",
+        "description": "Hex bolt M12 x 40mm, zinc, box of 100",
+        "qty": 40,
+        "unit_price": 75.0
+      },
+      {
+        "line": 3,
+        "sku": "APX-PLT-300",
+        "description": "Steel base plate, 300mm",
+        "qty": 30,
+        "unit_price": 100.0
+      }
+    ]
+  },
+  {
+    "po_number": "PO-44720",
+    "vendor_id": "ven_northwind",
+    "issued": "2026-08-04",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "NWP-CS-181210",
+        "description": "Corrugated shipper 18x12x10",
+        "qty": 100,
+        "unit_price": 18.5
+      },
+      {
+        "line": 2,
+        "sku": "NWP-CS-241816",
+        "description": "Corrugated shipper 24x18x16",
+        "qty": 40,
+        "unit_price": 22.0
+      },
+      {
+        "line": 3,
+        "sku": "NWP-SF-CASE4",
+        "description": "Stretch film pallet wrap, case of 4",
+        "qty": 10,
+        "unit_price": 102.0
+      }
+    ]
+  },
+  {
+    "po_number": "PO-44702",
+    "vendor_id": "ven_lumen",
+    "issued": "2026-08-07",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "LF-LTL-REG",
+        "description": "LTL freight, regional lane, per shipment",
+        "qty": 5,
+        "unit_price": 300.0
+      },
+      {
+        "line": 2,
+        "sku": "LF-ACC-LIFT",
+        "description": "Liftgate service, per stop",
+        "qty": 2,
+        "unit_price": 150.0
+      }
+    ]
+  },
+  {
+    "po_number": "PO-44690",
+    "vendor_id": "ven_apex",
+    "issued": "2026-07-22",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "APX-BRK-200",
+        "description": "Steel mounting bracket, 200mm",
+        "qty": 50,
+        "unit_price": 100.0
+      },
+      {
+        "line": 2,
+        "sku": "APX-PLT-300",
+        "description": "Steel base plate, 300mm",
+        "qty": 25,
+        "unit_price": 100.0
+      }
+    ]
+  },
+  {
+    "po_number": "PO-44731",
+    "vendor_id": "ven_harbor",
+    "issued": "2026-08-10",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "HOI-CHR-ERG",
+        "description": "Ergonomic task chair, mesh back",
+        "qty": 8,
+        "unit_price": 450.0
+      },
+      {
+        "line": 2,
+        "sku": "HOI-DSK-SS60",
+        "description": "Sit-stand desk, 60 in, electric",
+        "qty": 4,
+        "unit_price": 700.0
+      }
+    ]
+  },
+  {
+    "po_number": "PO-44725",
+    "vendor_id": "ven_northwind",
+    "issued": "2026-08-13",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "NWP-CS-241816",
+        "description": "Corrugated shipper 24x18x16",
+        "qty": 100,
+        "unit_price": 22.0
+      },
+      {
+        "line": 2,
+        "sku": "NWP-KVF-24",
+        "description": "Kraft void fill paper, 24 in roll",
+        "qty": 10,
+        "unit_price": 110.0
+      }
+    ]
+  },
+  {
+    "po_number": "PO-44740",
+    "vendor_id": "ven_harbor",
+    "issued": "2026-08-17",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "HOI-SHL-72",
+        "description": "Steel shelving unit, 72 in, 5 shelf",
+        "qty": 15,
+        "unit_price": 156.65
+      }
+    ]
+  }
+]

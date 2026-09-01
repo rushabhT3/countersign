@@ -1,0 +1,199 @@
+{
+  "id": "inv_005",
+  "invoice_number": "HOI-3391",
+  "vendor_id": "ven_harbor",
+  "vendor_name_on_doc": "Harbor Office Interiors",
+  "issue_date": "2026-08-18",
+  "due_date": "2026-09-17",
+  "currency": "USD",
+  "po_number": "PO-44731",
+  "subtotal": 6400.0,
+  "tax": 512.0,
+  "total": 6912.0,
+  "bank_account_last4_on_doc": "8812",
+  "initial_status": "needs_review",
+  "scenario": "vendor_bank_change",
+  "pages": [
+    {
+      "page": 1,
+      "image": "/invoices/inv_005/page-1.png",
+      "width_px": 1275,
+      "height_px": 1650
+    }
+  ],
+  "fields": {
+    "invoice_number": {
+      "value": "HOI-3391",
+      "confidence": 0.9371,
+      "page": 1,
+      "bbox": [
+        0.854,
+        0.1439,
+        0.9248,
+        0.1572
+      ]
+    },
+    "issue_date": {
+      "value": "2026-08-18",
+      "confidence": 0.987,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1629,
+        0.9248,
+        0.1761
+      ]
+    },
+    "due_date": {
+      "value": "2026-09-17",
+      "confidence": 0.74,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1818,
+        0.9248,
+        0.1951
+      ]
+    },
+    "po_number": {
+      "value": "PO-44731",
+      "confidence": 0.989,
+      "page": 1,
+      "bbox": [
+        0.8504,
+        0.2008,
+        0.9248,
+        0.214
+      ]
+    },
+    "vendor_name": {
+      "value": "Harbor Office Interiors",
+      "confidence": 0.9428,
+      "page": 1,
+      "bbox": [
+        0.0654,
+        0.1409,
+        0.292,
+        0.1581
+      ]
+    },
+    "subtotal": {
+      "value": "6400.00",
+      "confidence": 0.977,
+      "page": 1,
+      "bbox": [
+        0.8522,
+        0.4066,
+        0.9248,
+        0.4198
+      ]
+    },
+    "tax": {
+      "value": "512.00",
+      "confidence": 0.9603,
+      "page": 1,
+      "bbox": [
+        0.8658,
+        0.4293,
+        0.9248,
+        0.4426
+      ]
+    },
+    "total": {
+      "value": "6912.00",
+      "confidence": 0.9778,
+      "page": 1,
+      "bbox": [
+        0.8449,
+        0.4611,
+        0.9248,
+        0.4757
+      ]
+    },
+    "bank_account": {
+      "value": "****8812",
+      "confidence": 0.9818,
+      "page": 1,
+      "bbox": [
+        0.1708,
+        0.8987,
+        0.2264,
+        0.9107
+      ]
+    }
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "description": "Ergonomic task chair, mesh back",
+      "qty": 8,
+      "unit": "ea",
+      "unit_price": 450.0,
+      "amount": 3600.0,
+      "confidence": 0.9488,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.346,
+          0.3485,
+          0.3592
+        ],
+        "qty": [
+          0.5988,
+          0.346,
+          0.6078,
+          0.3592
+        ],
+        "unit_price": [
+          0.7057,
+          0.346,
+          0.7647,
+          0.3592
+        ],
+        "amount": [
+          0.8522,
+          0.346,
+          0.9248,
+          0.3592
+        ]
+      }
+    },
+    {
+      "line": 2,
+      "description": "Sit-stand desk, 60 in, electric",
+      "qty": 4,
+      "unit": "ea",
+      "unit_price": 700.0,
+      "amount": 2800.0,
+      "confidence": 0.991,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.3712,
+          0.3167,
+          0.3845
+        ],
+        "qty": [
+          0.5988,
+          0.3712,
+          0.6078,
+          0.3845
+        ],
+        "unit_price": [
+          0.7057,
+          0.3712,
+          0.7647,
+          0.3845
+        ],
+        "amount": [
+          0.8522,
+          0.3712,
+          0.9248,
+          0.3845
+        ]
+      }
+    }
+  ]
+}

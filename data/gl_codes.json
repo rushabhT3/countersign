@@ -1,0 +1,62 @@
+[
+  {
+    "code": "5010",
+    "name": "COGS — materials"
+  },
+  {
+    "code": "5020",
+    "name": "Packaging"
+  },
+  {
+    "code": "5030",
+    "name": "Freight-in"
+  },
+  {
+    "code": "6110",
+    "name": "Office supplies"
+  },
+  {
+    "code": "6120",
+    "name": "Furniture & fixtures"
+  },
+  {
+    "code": "6210",
+    "name": "Software subscriptions"
+  },
+  {
+    "code": "6220",
+    "name": "Cloud hosting"
+  },
+  {
+    "code": "6310",
+    "name": "Professional services"
+  },
+  {
+    "code": "6410",
+    "name": "Travel"
+  },
+  {
+    "code": "6510",
+    "name": "Utilities"
+  },
+  {
+    "code": "6610",
+    "name": "Marketing"
+  },
+  {
+    "code": "6710",
+    "name": "Repairs & maintenance"
+  },
+  {
+    "code": "1510",
+    "name": "Fixed assets"
+  },
+  {
+    "code": "2010",
+    "name": "Accrued liabilities"
+  },
+  {
+    "code": "6900",
+    "name": "Miscellaneous"
+  }
+]

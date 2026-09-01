@@ -1,0 +1,199 @@
+{
+  "id": "inv_004b",
+  "invoice_number": "2291",
+  "vendor_id": "ven_apex",
+  "vendor_name_on_doc": "Apex Industrial Supply LLC",
+  "issue_date": "2026-08-06",
+  "due_date": "2026-09-05",
+  "currency": "USD",
+  "po_number": "PO-44690",
+  "subtotal": 7500.0,
+  "tax": 600.0,
+  "total": 8100.0,
+  "bank_account_last4_on_doc": "4471",
+  "initial_status": "needs_review",
+  "scenario": "duplicate",
+  "pages": [
+    {
+      "page": 1,
+      "image": "/invoices/inv_004b/page-1.png",
+      "width_px": 1275,
+      "height_px": 1650
+    }
+  ],
+  "fields": {
+    "invoice_number": {
+      "value": "2291",
+      "confidence": 0.9841,
+      "page": 1,
+      "bbox": [
+        0.8885,
+        0.1439,
+        0.9248,
+        0.1572
+      ]
+    },
+    "issue_date": {
+      "value": "2026-08-06",
+      "confidence": 0.9971,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1629,
+        0.9248,
+        0.1761
+      ]
+    },
+    "due_date": {
+      "value": "2026-09-05",
+      "confidence": 0.9673,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1818,
+        0.9248,
+        0.1951
+      ]
+    },
+    "po_number": {
+      "value": "PO-44690",
+      "confidence": 0.9696,
+      "page": 1,
+      "bbox": [
+        0.8504,
+        0.2008,
+        0.9248,
+        0.214
+      ]
+    },
+    "vendor_name": {
+      "value": "Apex Industrial Supply LLC",
+      "confidence": 0.9468,
+      "page": 1,
+      "bbox": [
+        0.0654,
+        0.1409,
+        0.3427,
+        0.1581
+      ]
+    },
+    "subtotal": {
+      "value": "7500.00",
+      "confidence": 0.9632,
+      "page": 1,
+      "bbox": [
+        0.8522,
+        0.4066,
+        0.9248,
+        0.4198
+      ]
+    },
+    "tax": {
+      "value": "600.00",
+      "confidence": 0.955,
+      "page": 1,
+      "bbox": [
+        0.8658,
+        0.4293,
+        0.9248,
+        0.4426
+      ]
+    },
+    "total": {
+      "value": "8100.00",
+      "confidence": 0.9723,
+      "page": 1,
+      "bbox": [
+        0.8449,
+        0.4611,
+        0.9248,
+        0.4757
+      ]
+    },
+    "bank_account": {
+      "value": "****4471",
+      "confidence": 0.9878,
+      "page": 1,
+      "bbox": [
+        0.1708,
+        0.8987,
+        0.2264,
+        0.9107
+      ]
+    }
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "description": "Steel mounting bracket, 200mm",
+      "qty": 50,
+      "unit": "ea",
+      "unit_price": 100.0,
+      "amount": 5000.0,
+      "confidence": 0.9534,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.346,
+          0.3385,
+          0.3592
+        ],
+        "qty": [
+          0.5897,
+          0.346,
+          0.6078,
+          0.3592
+        ],
+        "unit_price": [
+          0.7057,
+          0.346,
+          0.7647,
+          0.3592
+        ],
+        "amount": [
+          0.8522,
+          0.346,
+          0.9248,
+          0.3592
+        ]
+      }
+    },
+    {
+      "line": 2,
+      "description": "Steel base plate, 300mm",
+      "qty": 25,
+      "unit": "ea",
+      "unit_price": 100.0,
+      "amount": 2500.0,
+      "confidence": 0.968,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.3712,
+          0.2886,
+          0.3845
+        ],
+        "qty": [
+          0.5897,
+          0.3712,
+          0.6078,
+          0.3845
+        ],
+        "unit_price": [
+          0.7057,
+          0.3712,
+          0.7647,
+          0.3845
+        ],
+        "amount": [
+          0.8522,
+          0.3712,
+          0.9248,
+          0.3845
+        ]
+      }
+    }
+  ]
+}

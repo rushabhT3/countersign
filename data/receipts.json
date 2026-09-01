@@ -1,0 +1,111 @@
+[
+  {
+    "receipt_id": "GR-9003",
+    "po_number": "PO-44690",
+    "received_date": "2026-08-01",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 50
+      },
+      {
+        "line": 2,
+        "qty_received": 25
+      }
+    ]
+  },
+  {
+    "receipt_id": "GR-9008",
+    "po_number": "PO-44702",
+    "received_date": "2026-08-13",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 5
+      },
+      {
+        "line": 2,
+        "qty_received": 2
+      }
+    ]
+  },
+  {
+    "receipt_id": "GR-9012",
+    "po_number": "PO-44718",
+    "received_date": "2026-08-10",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 60
+      },
+      {
+        "line": 2,
+        "qty_received": 40
+      },
+      {
+        "line": 3,
+        "qty_received": 30
+      }
+    ]
+  },
+  {
+    "receipt_id": "GR-9014",
+    "po_number": "PO-44720",
+    "received_date": "2026-08-12",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 100
+      },
+      {
+        "line": 2,
+        "qty_received": 40
+      },
+      {
+        "line": 3,
+        "qty_received": 10
+      }
+    ]
+  },
+  {
+    "receipt_id": "GR-9017",
+    "po_number": "PO-44731",
+    "received_date": "2026-08-17",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 8
+      },
+      {
+        "line": 2,
+        "qty_received": 4
+      }
+    ]
+  },
+  {
+    "receipt_id": "GR-9019",
+    "po_number": "PO-44725",
+    "received_date": "2026-08-19",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 100
+      },
+      {
+        "line": 2,
+        "qty_received": 10
+      }
+    ]
+  },
+  {
+    "receipt_id": "GR-9021",
+    "po_number": "PO-44740",
+    "received_date": "2026-08-22",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 15
+      }
+    ]
+  }
+]

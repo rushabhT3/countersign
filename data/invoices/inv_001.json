@@ -1,0 +1,235 @@
+{
+  "id": "inv_001",
+  "invoice_number": "INV-10231",
+  "vendor_id": "ven_apex",
+  "vendor_name_on_doc": "Apex Industrial Supply LLC",
+  "issue_date": "2026-08-12",
+  "due_date": "2026-09-11",
+  "currency": "USD",
+  "po_number": "PO-44718",
+  "subtotal": 12000.0,
+  "tax": 960.0,
+  "total": 12960.0,
+  "bank_account_last4_on_doc": "4471",
+  "initial_status": "needs_review",
+  "scenario": "clean",
+  "pages": [
+    {
+      "page": 1,
+      "image": "/invoices/inv_001/page-1.png",
+      "width_px": 1275,
+      "height_px": 1650
+    }
+  ],
+  "fields": {
+    "invoice_number": {
+      "value": "INV-10231",
+      "confidence": 0.9432,
+      "page": 1,
+      "bbox": [
+        0.8467,
+        0.1439,
+        0.9248,
+        0.1572
+      ]
+    },
+    "issue_date": {
+      "value": "2026-08-12",
+      "confidence": 0.9624,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1629,
+        0.9248,
+        0.1761
+      ]
+    },
+    "due_date": {
+      "value": "2026-09-11",
+      "confidence": 0.9719,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1818,
+        0.9248,
+        0.1951
+      ]
+    },
+    "po_number": {
+      "value": "PO-44718",
+      "confidence": 0.9496,
+      "page": 1,
+      "bbox": [
+        0.8504,
+        0.2008,
+        0.9248,
+        0.214
+      ]
+    },
+    "vendor_name": {
+      "value": "Apex Industrial Supply LLC",
+      "confidence": 0.9911,
+      "page": 1,
+      "bbox": [
+        0.0654,
+        0.1409,
+        0.3427,
+        0.1581
+      ]
+    },
+    "subtotal": {
+      "value": "12000.00",
+      "confidence": 0.9546,
+      "page": 1,
+      "bbox": [
+        0.8431,
+        0.4318,
+        0.9248,
+        0.4451
+      ]
+    },
+    "tax": {
+      "value": "960.00",
+      "confidence": 0.9696,
+      "page": 1,
+      "bbox": [
+        0.8658,
+        0.4545,
+        0.9248,
+        0.4678
+      ]
+    },
+    "total": {
+      "value": "12960.00",
+      "confidence": 0.99,
+      "page": 1,
+      "bbox": [
+        0.8349,
+        0.4864,
+        0.9248,
+        0.5009
+      ]
+    },
+    "bank_account": {
+      "value": "****4471",
+      "confidence": 0.9876,
+      "page": 1,
+      "bbox": [
+        0.1708,
+        0.8987,
+        0.2264,
+        0.9107
+      ]
+    }
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "description": "Steel mounting bracket, 200mm",
+      "qty": 60,
+      "unit": "ea",
+      "unit_price": 100.0,
+      "amount": 6000.0,
+      "confidence": 0.9955,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.346,
+          0.3385,
+          0.3592
+        ],
+        "qty": [
+          0.5897,
+          0.346,
+          0.6078,
+          0.3592
+        ],
+        "unit_price": [
+          0.7057,
+          0.346,
+          0.7647,
+          0.3592
+        ],
+        "amount": [
+          0.8522,
+          0.346,
+          0.9248,
+          0.3592
+        ]
+      }
+    },
+    {
+      "line": 2,
+      "description": "Hex bolt M12 x 40mm, zinc, box of 100",
+      "qty": 40,
+      "unit": "ea",
+      "unit_price": 75.0,
+      "amount": 3000.0,
+      "confidence": 0.9437,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.3712,
+          0.3903,
+          0.3845
+        ],
+        "qty": [
+          0.5897,
+          0.3712,
+          0.6078,
+          0.3845
+        ],
+        "unit_price": [
+          0.7147,
+          0.3712,
+          0.7647,
+          0.3845
+        ],
+        "amount": [
+          0.8522,
+          0.3712,
+          0.9248,
+          0.3845
+        ]
+      }
+    },
+    {
+      "line": 3,
+      "description": "Steel base plate, 300mm",
+      "qty": 30,
+      "unit": "ea",
+      "unit_price": 100.0,
+      "amount": 3000.0,
+      "confidence": 0.9551,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.3965,
+          0.2886,
+          0.4097
+        ],
+        "qty": [
+          0.5897,
+          0.3965,
+          0.6078,
+          0.4097
+        ],
+        "unit_price": [
+          0.7057,
+          0.3965,
+          0.7647,
+          0.4097
+        ],
+        "amount": [
+          0.8522,
+          0.3965,
+          0.9248,
+          0.4097
+        ]
+      }
+    }
+  ]
+}

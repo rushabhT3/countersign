@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ven_apex",
+    "name": "Apex Industrial Supply LLC",
+    "payment_terms": "Net 30",
+    "tax_rate": 0.08,
+    "price_tolerance_pct": 2.0,
+    "bank_account_last4": "4471",
+    "bank_last_changed": "2025-11-02",
+    "invoices_last_12m": 14,
+    "avg_invoice_amount": 8400.0,
+    "contact_email": "ar@apexindustrial.com"
+  },
+  {
+    "id": "ven_northwind",
+    "name": "Northwind Packaging Co.",
+    "payment_terms": "Net 45",
+    "tax_rate": 0.08,
+    "price_tolerance_pct": 2.0,
+    "bank_account_last4": "9083",
+    "bank_last_changed": "2024-03-15",
+    "invoices_last_12m": 22,
+    "avg_invoice_amount": 3900.0,
+    "contact_email": "billing@northwindpackaging.com"
+  },
+  {
+    "id": "ven_lumen",
+    "name": "Lumen Freight Inc.",
+    "payment_terms": "Net 15",
+    "tax_rate": 0.0,
+    "price_tolerance_pct": 3.0,
+    "bank_account_last4": "2210",
+    "bank_last_changed": "2023-08-01",
+    "invoices_last_12m": 9,
+    "avg_invoice_amount": 2100.0,
+    "contact_email": "invoices@lumenfreight.com"
+  },
+  {
+    "id": "ven_cobalt",
+    "name": "Cobalt Cloud Systems",
+    "payment_terms": "Net 30",
+    "tax_rate": 0.0,
+    "price_tolerance_pct": 0.0,
+    "bank_account_last4": "7734",
+    "bank_last_changed": "2024-01-10",
+    "invoices_last_12m": 12,
+    "avg_invoice_amount": 1450.0,
+    "contact_email": "billing@cobaltcloud.io"
+  },
+  {
+    "id": "ven_harbor",
+    "name": "Harbor Office Interiors",
+    "payment_terms": "Net 30",
+    "tax_rate": 0.08,
+    "price_tolerance_pct": 2.0,
+    "bank_account_last4": "5567",
+    "bank_last_changed": "2026-07-28",
+    "invoices_last_12m": 6,
+    "avg_invoice_amount": 5200.0,
+    "contact_email": "accounts@harborofficeinteriors.com"
+  }
+]

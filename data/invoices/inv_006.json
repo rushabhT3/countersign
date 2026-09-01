@@ -1,0 +1,187 @@
+{
+  "id": "inv_006",
+  "invoice_number": "CCS-77213",
+  "vendor_id": "ven_cobalt",
+  "vendor_name_on_doc": "Cobalt Cloud Systems",
+  "issue_date": "2026-08-20",
+  "due_date": "2026-09-19",
+  "currency": "USD",
+  "subtotal": 1450.0,
+  "tax": 0.0,
+  "total": 1450.0,
+  "bank_account_last4_on_doc": "7734",
+  "initial_status": "needs_review",
+  "scenario": "non_po",
+  "pages": [
+    {
+      "page": 1,
+      "image": "/invoices/inv_006/page-1.png",
+      "width_px": 1275,
+      "height_px": 1650
+    }
+  ],
+  "fields": {
+    "invoice_number": {
+      "value": "CCS-77213",
+      "confidence": 0.9326,
+      "page": 1,
+      "bbox": [
+        0.8395,
+        0.1439,
+        0.9248,
+        0.1572
+      ]
+    },
+    "issue_date": {
+      "value": "2026-08-20",
+      "confidence": 0.9667,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1629,
+        0.9248,
+        0.1761
+      ]
+    },
+    "due_date": {
+      "value": "2026-09-19",
+      "confidence": 0.9766,
+      "page": 1,
+      "bbox": [
+        0.8413,
+        0.1818,
+        0.9248,
+        0.1951
+      ]
+    },
+    "vendor_name": {
+      "value": "Cobalt Cloud Systems",
+      "confidence": 0.9908,
+      "page": 1,
+      "bbox": [
+        0.0654,
+        0.1409,
+        0.2908,
+        0.1581
+      ]
+    },
+    "subtotal": {
+      "value": "1450.00",
+      "confidence": 0.9591,
+      "page": 1,
+      "bbox": [
+        0.8522,
+        0.4066,
+        0.9248,
+        0.4198
+      ]
+    },
+    "tax": {
+      "value": "0.00",
+      "confidence": 0.9605,
+      "page": 1,
+      "bbox": [
+        0.884,
+        0.4293,
+        0.9248,
+        0.4426
+      ]
+    },
+    "total": {
+      "value": "1450.00",
+      "confidence": 0.9688,
+      "page": 1,
+      "bbox": [
+        0.8449,
+        0.4611,
+        0.9248,
+        0.4757
+      ]
+    },
+    "bank_account": {
+      "value": "****7734",
+      "confidence": 0.9528,
+      "page": 1,
+      "bbox": [
+        0.1708,
+        0.8987,
+        0.2264,
+        0.9107
+      ]
+    }
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "description": "Team plan, 25 seats, Aug 2026",
+      "qty": 25,
+      "unit": "seat",
+      "unit_price": 48.0,
+      "amount": 1200.0,
+      "confidence": 0.9677,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.346,
+          0.3349,
+          0.3592
+        ],
+        "qty": [
+          0.5897,
+          0.346,
+          0.6078,
+          0.3592
+        ],
+        "unit_price": [
+          0.7147,
+          0.346,
+          0.7647,
+          0.3592
+        ],
+        "amount": [
+          0.8522,
+          0.346,
+          0.9248,
+          0.3592
+        ]
+      }
+    },
+    {
+      "line": 2,
+      "description": "Storage add-on 2 TB",
+      "qty": 1,
+      "unit": "ea",
+      "unit_price": 250.0,
+      "amount": 250.0,
+      "confidence": 0.9863,
+      "page": 1,
+      "bbox": {
+        "description": [
+          0.1078,
+          0.3712,
+          0.2595,
+          0.3845
+        ],
+        "qty": [
+          0.5988,
+          0.3712,
+          0.6078,
+          0.3845
+        ],
+        "unit_price": [
+          0.7057,
+          0.3712,
+          0.7647,
+          0.3845
+        ],
+        "amount": [
+          0.8658,
+          0.3712,
+          0.9248,
+          0.3845
+        ]
+      }
+    }
+  ]
+}

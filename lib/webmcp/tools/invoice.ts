@@ -149,7 +149,7 @@ export const showFieldEvidence = defineTool({
 export const addComment = defineTool({
   name: 'add_comment',
   description:
-    'Posts a comment on the open invoice under the Agent identity, optionally pinned to a field key. The reviewer sees it in the Comments tab and can reply. Use it to explain a finding or ask the reviewer a question.',
+    'Posts a comment under the Agent identity on the invoice that is currently open (the one you most recently opened), optionally pinned to a field key. Post before opening the next invoice. The reviewer sees it in the Comments tab and can reply. Use it to explain a finding or ask the reviewer a question.',
   input: z.object({
     text: z.string().min(1).max(500).describe('Comment text, 1 to 500 characters.'),
     field: z.string().min(1).optional().describe('Optional field key to pin the comment to, such as total or line:2:qty.'),
@@ -164,7 +164,7 @@ export const addComment = defineTool({
 export const flagIssue = defineTool({
   name: 'flag_issue',
   description:
-    'Records an issue on the open invoice with a type, severity, message, and optional field or line reference, and moves the invoice to flagged status. Call it as soon as a match, duplicate, vendor, or tax check finds a problem; it is the normal next step and the reviewer expects it. Recording is reversible: the reviewer marks each issue fixed or waives it on the countersign card. Open issues block approval until then.',
+    'Records an issue on the invoice that is currently open, with a type, severity, message, and optional field or line reference, and moves it to flagged status. Call it as soon as a match, duplicate, vendor, or tax check finds a problem, before opening the next invoice; it is the normal next step and the reviewer expects it. Recording is reversible: the reviewer marks each issue fixed or waives it on the countersign card. Open issues block approval until then.',
   input: z.object({
     type: z.enum(ISSUE_TYPES).describe('One of qty_mismatch, price_variance, duplicate, vendor_risk, tax_error, missing_po.'),
     severity: z.enum(SEVERITIES).describe('low, medium, or high.'),

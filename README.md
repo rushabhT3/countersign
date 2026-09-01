@@ -4,7 +4,7 @@
 
 The agent opens an invoice, runs a three-way match, hunts for duplicates, checks the vendor's bank details, highlights the exact field on the scanned page, flags issues, proposes GL codes, and asks for a decision. Only the reviewer's click can approve. Every tool call and every click lands in one audit log.
 
-![Countersign workbench](docs/hero.png)
+![Countersign workbench: the agent highlighted the quantity cell on NP-88120 after the three-way match flagged it](docs/highlight.png)
 
 - **Live:** _add the Vercel URL_
 - **Video:** _add the YouTube link_

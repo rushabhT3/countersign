@@ -12,6 +12,8 @@ export interface FieldEvidence {
   bbox: Bbox;
 }
 
+export const LOW_CONFIDENCE = 0.85;
+
 const LINE_KEY = /^line:(\d+):(description|qty|unit_price|amount)$/;
 
 export function vendorName(invoice: Pick<InvoiceState, 'vendor_id' | 'vendor_name_on_doc'>): string {

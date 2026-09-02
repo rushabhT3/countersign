@@ -5,7 +5,9 @@ import { useStore, type AuditEntry } from '@/lib/store';
 import { QUEUE_TOOLS } from '@/lib/webmcp/tools/queue';
 import { INVOICE_TOOLS } from '@/lib/webmcp/tools/invoice';
 import { LIMITS, type AnyToolDef } from '@/lib/webmcp/registry';
+import { exampleInput, type ExampleState } from '@/lib/webmcp/examples';
 import { Chip } from '@/components/Chip';
+import { CopyButton } from '@/components/CopyButton';
 import { clockTime } from '@/lib/ui/format';
 
 interface ToolStats {
@@ -13,6 +15,12 @@ interface ToolStats {
   errors: number;
   last?: AuditEntry;
 }
+
+const EXAMPLE_HINTS: Record<string, string> = {
+  get_decision: 'Call request_countersign first; the decision id fills in here.',
+  flag_issue: 'Run the match, duplicate search, or vendor check first; the example fills from the finding.',
+};
+const NO_INVOICE_HINT = 'Open an invoice first.';
 
 function useToolStats(): Record<string, ToolStats> {
   const audit = useStore((s) => s.audit);
@@ -30,11 +38,58 @@ function useToolStats(): Record<string, ToolStats> {
   }, [audit]);
 }
 
-function ToolRow({ tool, isRegistered, stats }: { tool: AnyToolDef; isRegistered: boolean; stats?: ToolStats }) {
+function useExampleState(): ExampleState {
+  const openInvoiceId = useStore((s) => s.openInvoiceId);
+  const invoices = useStore((s) => s.invoices);
+  const order = useStore((s) => s.order);
+  const decisions = useStore((s) => s.decisions);
+  return useMemo(() => ({ openInvoiceId, invoices, order, decisions }), [openInvoiceId, invoices, order, decisions]);
+}
+
+function ExampleLine({ tool, exampleState }: { tool: AnyToolDef; exampleState: ExampleState }) {
+  const example = exampleInput(tool.name, exampleState);
+  if (!example) {
+    const hint = exampleState.openInvoiceId || tool.name === 'get_decision' ? EXAMPLE_HINTS[tool.name] : NO_INVOICE_HINT;
+    return <p className="text-[10px] text-ink-faint">Example input: {hint ?? NO_INVOICE_HINT}</p>;
+  }
+  const json = JSON.stringify(example);
+  return (
+    <div className="flex items-center gap-1.5">
+      <code className="min-w-0 flex-1 truncate rounded-sm bg-panel-muted px-1.5 py-0.5 font-mono text-[10px] text-ink" title={json}>
+        {json}
+      </code>
+      <CopyButton text={json} label={`Copy example input for ${tool.name}`} />
+    </div>
+  );
+}
+
+function LastCall({ entry }: { entry: AuditEntry }) {
+  const hasArgs = entry.args_summary !== '{}' && entry.args_summary !== '';
+  return (
+    <div className="font-mono text-[10px] text-ink-faint">
+      <p className="truncate">
+        {clockTime(entry.ts)} · {entry.ok ? 'ok' : 'error'}
+        {hasArgs && <span className="text-ink-muted"> · in {entry.args_summary}</span>}
+      </p>
+      <p className="truncate">out {entry.result_summary}</p>
+    </div>
+  );
+}
+
+interface ToolRowProps {
+  tool: AnyToolDef;
+  step?: number;
+  isRegistered: boolean;
+  stats?: ToolStats;
+  exampleState: ExampleState;
+}
+
+function ToolRow({ tool, step, isRegistered, stats, exampleState }: ToolRowProps) {
   const isRead = tool.annotations?.readOnlyHint === true;
   return (
     <li className="flex flex-col gap-1 px-3 py-2.5">
       <div className="flex flex-wrap items-center gap-1.5">
+        {step !== undefined && <span className="font-mono text-[10px] text-ink-faint">{step}</span>}
         <span className="font-mono text-[12px] font-medium">{tool.name}</span>
         <Chip tone={isRegistered ? 'green' : 'slate'} title={isRegistered ? 'Registered with the agent right now' : 'Registered only while an invoice is open'}>
           {isRegistered ? 'live' : 'idle'}
@@ -47,16 +102,23 @@ function ToolRow({ tool, isRegistered, stats }: { tool: AnyToolDef; isRegistered
         </span>
       </div>
       <p className="line-clamp-2 text-[11px] leading-4 text-ink-muted">{tool.description}</p>
-      {stats?.last && (
-        <p className="truncate font-mono text-[10px] text-ink-faint">
-          {clockTime(stats.last.ts)} · {stats.last.ok ? 'ok' : 'error'} · {stats.last.result_summary}
-        </p>
-      )}
+      <ExampleLine tool={tool} exampleState={exampleState} />
+      {stats?.last && <LastCall entry={stats.last} />}
     </li>
   );
 }
 
-function ToolGroup({ title, note, tools, registered, stats }: { title: string; note: string; tools: AnyToolDef[]; registered: Set<string>; stats: Record<string, ToolStats> }) {
+interface ToolGroupProps {
+  title: string;
+  note: string;
+  tools: AnyToolDef[];
+  isNumbered?: boolean;
+  registered: Set<string>;
+  stats: Record<string, ToolStats>;
+  exampleState: ExampleState;
+}
+
+function ToolGroup({ title, note, tools, isNumbered = false, registered, stats, exampleState }: ToolGroupProps) {
   const live = tools.filter((t) => registered.has(t.name)).length;
   return (
     <section>
@@ -68,8 +130,15 @@ function ToolGroup({ title, note, tools, registered, stats }: { title: string; n
       </div>
       <p className="px-3 pt-2 text-[11px] text-ink-muted">{note}</p>
       <ul className="divide-y divide-line">
-        {tools.map((tool) => (
-          <ToolRow key={tool.name} tool={tool} isRegistered={registered.has(tool.name)} stats={stats[tool.name]} />
+        {tools.map((tool, index) => (
+          <ToolRow
+            key={tool.name}
+            tool={tool}
+            step={isNumbered ? index + 1 : undefined}
+            isRegistered={registered.has(tool.name)}
+            stats={stats[tool.name]}
+            exampleState={exampleState}
+          />
         ))}
       </ul>
     </section>
@@ -81,6 +150,7 @@ export function ToolsTab() {
   const registeredList = useStore((s) => s.registeredTools);
   const registered = useMemo(() => new Set(registeredList), [registeredList]);
   const stats = useToolStats();
+  const exampleState = useExampleState();
 
   return (
     <div className="pb-4">
@@ -96,14 +166,19 @@ export function ToolsTab() {
             live: four on load, thirteen while an invoice is open.
           </p>
         )}
+        <p className="mt-1.5 text-ink-muted">
+          Each row carries an example input built from the invoice on screen. Copy it into Chrome&apos;s Model Context Tool Inspector to call the tool by hand.
+        </p>
       </div>
-      <ToolGroup title="Always registered" note="Queue tools live for the life of the page." tools={QUEUE_TOOLS} registered={registered} stats={stats} />
+      <ToolGroup title="Always registered" note="Queue tools live for the life of the page." tools={QUEUE_TOOLS} registered={registered} stats={stats} exampleState={exampleState} />
       <ToolGroup
         title="While an invoice is open"
-        note="Registered once when an invoice opens, unregistered when the workbench returns to empty. Switching invoices keeps them."
+        note="Registered once when an invoice opens, unregistered when the workbench returns to empty. Numbered in the order a review runs."
         tools={INVOICE_TOOLS}
+        isNumbered
         registered={registered}
         stats={stats}
+        exampleState={exampleState}
       />
     </div>
   );

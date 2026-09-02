@@ -6,9 +6,7 @@ import { STATUSES, type Status } from '@/lib/types';
 import { isPending } from '@/lib/domain/next';
 import { roundMoney } from '@/lib/domain/tax';
 import { INVOICE_TOOL_NAMES } from '@/lib/webmcp/tools/invoice';
-import { nextAfter, openIssues, vendorName } from '@/lib/webmcp/tools/common';
-
-const LOW_CONFIDENCE = 0.85;
+import { LOW_CONFIDENCE, nextAfter, openIssues, vendorName } from '@/lib/webmcp/tools/common';
 
 function queueRow(invoice: InvoiceState) {
   return {

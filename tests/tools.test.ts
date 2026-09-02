@@ -227,6 +227,39 @@ describe('invoice tools', () => {
   });
 });
 
+describe('reviewer replies reach the agent', () => {
+  const longReply = 'Confirmed with receiving: '.padEnd(500, 'x');
+
+  it('open_invoice carries the newest three reviewer replies, truncated, inside budget', async () => {
+    await run('open_invoice', { id: 'inv_002' });
+    const store = useStore.getState();
+    for (let n = 1; n <= 4; n += 1) store.addComment('inv_002', { actor: 'human', text: String(n) + ' ' + longReply, field: n === 4 ? 'line:1:qty' : undefined });
+    store.addComment('inv_002', { actor: 'agent', text: 'Noted.' });
+    const opened = (await run('open_invoice', { id: 'inv_002' })) as { reviewer_replies: { comment_id: string; text: string; field: string | null }[] };
+    expect(opened.reviewer_replies).toHaveLength(3);
+    expect(opened.reviewer_replies.map((r) => r.text[0])).toEqual(['2', '3', '4']);
+    expect(opened.reviewer_replies[2]).toMatchObject({ field: 'line:1:qty' });
+    expect(opened.reviewer_replies.every((r) => r.text.length <= 100)).toBe(true);
+    const out = clamp(opened);
+    expect(out.length).toBeLessThanOrEqual(LIMITS.output);
+    expect(JSON.parse(out)).not.toHaveProperty('truncated');
+  });
+
+  it('get_decision shows a reply typed after the countersign request', async () => {
+    await run('open_invoice', { id: 'inv_005' });
+    const requested = (await run('request_countersign', { action: 'hold', rationale: 'Bank changed.' })) as { decision_id: string; reviewer_replies?: unknown };
+    useStore.getState().addComment('inv_005', { actor: 'human', text: 'Called the vendor; the new account is legitimate.' });
+    const decision = (await run('get_decision', { decision_id: requested.decision_id })) as { reviewer_replies: { text: string }[] };
+    expect(decision.reviewer_replies).toEqual([expect.objectContaining({ text: 'Called the vendor; the new account is legitimate.', field: null })]);
+    expect(clamp(decision).length).toBeLessThanOrEqual(LIMITS.output);
+  });
+
+  it('is empty when the reviewer has not replied', async () => {
+    const opened = await run('open_invoice', { id: 'inv_001' });
+    expect(opened.reviewer_replies).toEqual([]);
+  });
+});
+
 describe('request_countersign', () => {
   it('returns pending on timeout and the same decision on a repeat call', async () => {
     await run('open_invoice', { id: 'inv_001' });

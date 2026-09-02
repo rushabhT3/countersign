@@ -2,6 +2,7 @@ import type { InvoiceState, Issue, Store } from '@/lib/store';
 import { VENDORS } from '@/lib/seed';
 import { nextInvoiceId } from '@/lib/domain/next';
 import { formatMoney } from '@/lib/domain/tax';
+import { truncate } from '@/lib/domain/normalize';
 import { HEADER_FIELD_KEYS, LINE_FIELD_COLUMNS, type Bbox, type LineFieldColumn } from '@/lib/types';
 
 export interface FieldEvidence {
@@ -13,6 +14,15 @@ export interface FieldEvidence {
 }
 
 export const LOW_CONFIDENCE = 0.85;
+const REPLY_COUNT = 3;
+const REPLY_MAX = 100;
+
+export interface ReviewerReply {
+  comment_id: string;
+  text: string;
+  field: string | null;
+  created_at: number;
+}
 
 const LINE_KEY = /^line:(\d+):(description|qty|unit_price|amount)$/;
 
@@ -63,4 +73,13 @@ function lineValue(item: InvoiceState['line_items'][number], column: LineFieldCo
     case 'amount':
       return formatMoney(item.amount);
   }
+}
+
+// The newest reviewer comments, so the agent sees a human reply on its next open_invoice or
+// get_decision call. Text is document-free (typed by the reviewer) but still kept short for budget.
+export function reviewerReplies(invoice: Pick<InvoiceState, 'comments'>): ReviewerReply[] {
+  return invoice.comments
+    .filter((c) => c.actor === 'human')
+    .slice(-REPLY_COUNT)
+    .map((c) => ({ comment_id: c.id, text: truncate(c.text, REPLY_MAX), field: c.field ?? null, created_at: c.created_at }));
 }

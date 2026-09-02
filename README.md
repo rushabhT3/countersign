@@ -31,15 +31,15 @@ No login, no server. State lives in `localStorage`; **Reset demo** in the header
 | Tool | Access | What it does |
 | --- | --- | --- |
 | `list_invoices` | read | Queue rows with id, vendor, total, status, open-issue count; filters by status, vendor, minimum total. |
-| `open_invoice` | read | Opens an invoice on the reviewer's screen; returns header fields, low-confidence fields, open issues, and the nine tools that just became available. |
+| `open_invoice` | read | Opens an invoice on the reviewer's screen; returns header fields, low-confidence fields, open issues, the reviewer's latest replies, and the nine tools that just became available. |
 | `get_review_summary` | read | Counts by status, pending value, invoices with high-severity issues, suggested next invoice. |
-| `get_decision` | read | Current outcome of a countersign decision (pending, approved, held, rejected, dismissed). |
+| `get_decision` | read | Current outcome of a countersign decision (pending, approved, held, rejected, dismissed), plus any reply the reviewer typed in the meantime. |
 | `get_line_items` | read | Paginated line items with extraction confidence and accepted GL code. |
 | `run_three_way_match` | read | Invoice vs purchase order vs goods receipt, line by line, plus subtotal, tax, and total arithmetic. Result also renders in the Match tab. |
 | `find_duplicates` | read | Same vendor with the same total within 14 days, or the same invoice number after normalization (`INV-2291` ≡ `2291`). |
 | `get_vendor_profile` | read | Terms, history, tolerance, tax rate, bank on file vs bank printed on this invoice, days since the bank changed. |
 | `show_field_evidence` | read | Draws a pulsing highlight on the page image and returns value, confidence, page, and bbox. |
-| `add_comment` | write | Posts under the Agent identity, optionally pinned to a field. The reviewer replies in the same thread. |
+| `add_comment` | write | Posts under the Agent identity, optionally pinned to a field. The reviewer replies in the same thread; the agent sees the reply through `open_invoice` and `get_decision`. |
 | `flag_issue` | write | Records a typed, severity-rated issue; moves the invoice to *flagged*. Open issues block approval. |
 | `propose_gl_coding` | write | Saves pending GL proposals per line; the reviewer accepts or edits them on the card. Atomic; unknown codes get the valid list back. |
 | `request_countersign` | write | Opens the countersign card and waits up to 25 s for the click. Times out to `pending`; repeat calls are idempotent. |

@@ -6,7 +6,7 @@ import { STATUSES, type Status } from '@/lib/types';
 import { isPending } from '@/lib/domain/next';
 import { roundMoney } from '@/lib/domain/tax';
 import { INVOICE_TOOL_NAMES } from '@/lib/webmcp/tools/invoice';
-import { LOW_CONFIDENCE, nextAfter, openIssues, vendorName } from '@/lib/webmcp/tools/common';
+import { LOW_CONFIDENCE, nextAfter, openIssues, reviewerReplies, vendorName } from '@/lib/webmcp/tools/common';
 
 function queueRow(invoice: InvoiceState) {
   return {
@@ -76,6 +76,7 @@ export const openInvoice = defineTool({
       line_count: invoice.line_items.length,
       low_confidence_fields: low,
       open_issues: openIssues(invoice).map((i) => ({ id: i.id, type: i.type, severity: i.severity })),
+      reviewer_replies: reviewerReplies(invoice),
       tools_now_available: INVOICE_TOOL_NAMES,
       review_flow:
         'run_three_way_match, find_duplicates, get_vendor_profile; show_field_evidence for each number you cite; flag_issue for each problem; finish with request_countersign.',
@@ -115,6 +116,7 @@ export const getDecision = defineTool({
     const state = useStore.getState();
     const decision = state.decisions[decision_id];
     if (!decision) return { error: E.DECISION_NOT_FOUND(decision_id) };
+    const invoice = state.invoices[decision.invoice_id];
     return {
       decision_id: decision.id,
       invoice_id: decision.invoice_id,
@@ -122,7 +124,8 @@ export const getDecision = defineTool({
       outcome: decision.outcome,
       requested_at: decision.requested_at,
       resolved_at: decision.resolved_at ?? null,
-      invoice_status: state.invoices[decision.invoice_id]?.status ?? null,
+      invoice_status: invoice?.status ?? null,
+      reviewer_replies: invoice ? reviewerReplies(invoice) : [],
       next_invoice_id: nextAfter(state, decision.invoice_id),
     };
   },

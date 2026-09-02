@@ -60,7 +60,7 @@ export function CommentsTab({ invoiceId }: CommentsTabProps) {
   return (
     <div className="flex h-full flex-col">
       {comments.length === 0 ? (
-        <p className="px-3 py-6 text-xs text-ink-muted">No comments yet. The agent posts here with add_comment; reply below and it shows up in the audit log.</p>
+        <p className="px-3 py-6 text-xs text-ink-muted">No comments yet. The agent posts here with add_comment. Reply below: the agent reads your reply on its next open_invoice or get_decision call, and it lands in the audit log.</p>
       ) : (
         <ul className="divide-y divide-line">
           {comments.map((c) => (

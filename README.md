@@ -14,7 +14,7 @@ The agent opens an invoice, runs a three-way match, hunts for duplicates, checks
 
 **ChatGPT desktop.** Open the built-in browser (`Ctrl/Cmd+Shift+B`), turn on *Settings → Browser → Permissions → Enable site tools*, pick GPT-5.6 Sol, and load the live URL. The Site tools dropdown lists four queue tools; nine more appear once an invoice is open.
 
-**Chrome 149+.** Enable `chrome://flags/#enable-webmcp-testing`, relaunch, install the Model Context Tool Inspector extension, and load the live URL. DevTools → Application → WebMCP shows the registered tools. To call a tool by hand, open the **Tools** tab in the workbench, copy the example input next to the tool, and paste it into the inspector; the examples follow the invoice you have open.
+**Chrome 149+.** Enable `chrome://flags/#enable-webmcp-testing`, relaunch, install the Model Context Tool Inspector extension, and load the live URL. DevTools → Application → WebMCP shows the registered tools. To call a tool by hand, open the **Tools** tab in the workbench, copy the example input next to the tool, and paste it into the inspector; the examples follow the invoice you have open. If the deployment sets `WEBMCP_ORIGIN_TRIAL_TOKEN` (a token from the [WebMCP origin trial](https://developer.chrome.com/origintrials/#/register_trial/4163014905550602241)), the page sends an `Origin-Trial` header and Chrome 149+ exposes the API without the flag.
 
 Paste one of these:
 

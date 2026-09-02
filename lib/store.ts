@@ -7,7 +7,7 @@ import { SEED_INVOICES, SEED_ORDER } from '@/lib/seed';
 import { notifyDecisionResolved } from '@/lib/webmcp/decisions';
 
 export const STORAGE_KEY = 'countersign-v1';
-export const STORE_VERSION = 1;
+export const STORE_VERSION = 2;
 const AUDIT_CAP = 500;
 
 export interface Issue {

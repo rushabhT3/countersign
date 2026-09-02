@@ -14,6 +14,7 @@ import inv005 from '@/data/invoices/inv_005.json';
 import inv006 from '@/data/invoices/inv_006.json';
 import inv007 from '@/data/invoices/inv_007.json';
 import inv008 from '@/data/invoices/inv_008.json';
+import inv009 from '@/data/invoices/inv_009.json';
 
 const Bbox = z.tuple([z.number(), z.number(), z.number(), z.number()]);
 const Field = z.object({ value: z.string(), confidence: z.number(), page: z.int(), bbox: Bbox });
@@ -96,7 +97,7 @@ export const GL_CODE_NAMES: Record<string, string> = Object.fromEntries(GL_CODES
 
 export const SEED_INVOICES: InvoiceSeed[] = z
   .array(InvoiceSeedSchema)
-  .parse([inv001, inv002, inv003, inv004a, inv004b, inv005, inv006, inv007, inv008]);
+  .parse([inv001, inv002, inv003, inv004a, inv004b, inv005, inv006, inv007, inv008, inv009]);
 
 export const SEED_ORDER: string[] = SEED_INVOICES.map((inv) => inv.id);
 

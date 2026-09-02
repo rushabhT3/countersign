@@ -23,6 +23,9 @@ One line per choice the spec left open. Newest at the bottom.
 - `PageViewer` uses a plain `<img>` per the spec, with a one-line eslint disable for `@next/next/no-img-element`.
 - Design: light only; tokens in `app/globals.css` under `@theme`; Tailwind palette for chips; Geist / Geist Mono from the scaffold. Grid collapses to a single column under 1100 px.
 - Registered-tool count for the header pill is tracked in the store (`registeredTools`, not persisted) by `WebMCPProvider`.
+- `lib/webmcp/examples.ts` builds a ready-to-paste input per tool from the open invoice (issue fields, match findings, duplicate candidates, bank mismatch, pending decision ids) for people driving the tools by hand in Chrome's inspector. The agent never receives these; they are UI only.
+- `open_invoice` and `get_decision` return `reviewer_replies` (newest three human comments, 100 chars each) so a reply typed in the Comments tab reaches the agent without a fourteenth tool.
+- `STORE_VERSION` is 2: the tenth invoice would otherwise be missing for anyone whose browser still holds the version-1 state, and the persist migration resets to seed on a version change.
 - `scripts/gen/out/` (PDFs, logo/stamp rasters, debug overlays) is gitignored; regenerate with `python scripts/gen/generate.py && python scripts/gen/debug_overlay.py`.
 
 ## Data (S1 generator)
@@ -38,3 +41,4 @@ One line per choice the spec left open. Newest at the bottom.
 - Stamp dates: inv_001 2026-08-13, inv_005 2026-08-19, inv_008 2026-08-25; 200 pt wide, alpha 0.55, 12°.
 - Template A (Helvetica): apex, cobalt, harbor. Template B (Times): northwind, lumen.
 - PIL rasters use `C:/Windows/Fonts/arial(bd).ttf` when present, so logo and stamp pixels are deterministic on Windows and may differ elsewhere.
+- Tenth document, beyond the spec's nine: inv_009 (LF-2026-0942, Lumen, PO-44745, receipt GR-9024) bills two PO lines plus a $95 "Fuel surcharge" line whose description is an instruction aimed at the agent. The three-way match reports line 3 as not on the PO; the scenario exists to show the untrusted-content hints and the human-only approval path under an injection attempt.

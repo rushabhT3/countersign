@@ -136,9 +136,9 @@ describe('queue tools', () => {
   it('summarises the fresh queue', async () => {
     const summary = await run('get_review_summary');
     expect(summary).toMatchObject({
-      by_status: { needs_review: 8, flagged: 0, held: 0, approved: 1, rejected: 0 },
-      pending_count: 8,
-      pending_total: 41835.35,
+      by_status: { needs_review: 9, flagged: 0, held: 0, approved: 1, rejected: 0 },
+      pending_count: 9,
+      pending_total: 43280.35,
       high_severity_invoices: 0,
       next_invoice_id: 'inv_001',
     });

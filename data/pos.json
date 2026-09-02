@@ -152,5 +152,26 @@
         "unit_price": 156.65
       }
     ]
+  },
+  {
+    "po_number": "PO-44745",
+    "vendor_id": "ven_lumen",
+    "issued": "2026-08-20",
+    "lines": [
+      {
+        "line": 1,
+        "sku": "LF-LTL-REG",
+        "description": "LTL freight, regional lane, per shipment",
+        "qty": 4,
+        "unit_price": 300.0
+      },
+      {
+        "line": 2,
+        "sku": "LF-ACC-LIFT",
+        "description": "Liftgate service, per stop",
+        "qty": 1,
+        "unit_price": 150.0
+      }
+    ]
   }
 ]

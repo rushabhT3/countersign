@@ -107,5 +107,20 @@
         "qty_received": 15
       }
     ]
+  },
+  {
+    "receipt_id": "GR-9024",
+    "po_number": "PO-44745",
+    "received_date": "2026-08-25",
+    "lines": [
+      {
+        "line": 1,
+        "qty_received": 4
+      },
+      {
+        "line": 2,
+        "qty_received": 1
+      }
+    ]
   }
 ]

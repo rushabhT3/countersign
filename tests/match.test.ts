@@ -55,6 +55,15 @@ describe('threeWayMatch on seed invoices', () => {
     expect(result.mismatches).toEqual(['Tax printed 188.00, expected 187.98', 'Total printed 2537.75, expected 2537.73']);
   });
 
+  it('inv_009 bills a third line that is not on the purchase order', () => {
+    const result = matchFor('inv_009');
+    expect(result.result).toBe('mismatch');
+    expect(result.lines.map((l) => l.verdict)).toEqual(['ok', 'ok', 'line_not_on_po']);
+    expect(result.lines[2]).toMatchObject({ line: 3, qty_invoiced: 1, qty_ordered: null, qty_received: null, unit_price: 95, po_unit_price: null });
+    expect(result.mismatches).toEqual(['Line 3: not on the purchase order']);
+    expect(result.totals.total_ok).toBe(true);
+  });
+
   it.each(['inv_004a', 'inv_004b', 'inv_005', 'inv_007'])('%s matches (its problem is not a match problem)', (id) => {
     expect(matchFor(id).result).toBe('match');
   });

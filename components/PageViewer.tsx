@@ -6,6 +6,7 @@ import type { Bbox } from '@/lib/types';
 import { closeInvoiceAsHuman } from '@/lib/ui/manual';
 import { vendorName } from '@/lib/webmcp/tools/common';
 import { escapeText } from '@/lib/domain/normalize';
+import { AgentActivity } from '@/components/AgentActivity';
 
 const PULSE_MS = 1800;
 
@@ -29,7 +30,8 @@ function allBoxes(invoice: InvoiceState): { key: string; bbox: Bbox }[] {
 
 function EmptyViewer() {
   return (
-    <section className="flex min-h-[40vh] flex-1 flex-col items-center justify-center gap-6 px-6 py-12 text-center">
+    <section className="relative flex min-h-[40vh] flex-1 flex-col items-center justify-center gap-6 px-6 py-12 text-center">
+      <AgentActivity />
       <div>
         <p className="text-base font-medium">Pick an invoice, or ask the agent to work through the queue.</p>
         <p className="mt-1 text-sm text-ink-muted">Nine invoice tools register the moment one opens.</p>
@@ -68,7 +70,8 @@ export function PageViewer() {
   const page = invoice.pages[0];
 
   return (
-    <section className="flex min-h-0 flex-col border-b border-line bg-canvas min-[1100px]:border-b-0" aria-label="Invoice page">
+    <section className="relative flex min-h-0 flex-col border-b border-line bg-canvas min-[1100px]:border-b-0" aria-label="Invoice page">
+      <AgentActivity />
       <div className="flex shrink-0 items-center gap-3 border-b border-line bg-panel px-3 py-2">
         <div className="min-w-0">
           <div className="font-mono text-[13px] font-medium">{escapeText(invoice.invoice_number)}</div>

@@ -3,19 +3,34 @@
 import { useShallow } from 'zustand/react/shallow';
 import { useStore } from '@/lib/store';
 import { STATUSES, type Status } from '@/lib/types';
-import { statusLabel } from '@/lib/ui/format';
+import { money, statusLabel } from '@/lib/ui/format';
 
 const RESET_PROMPT = 'Reset the demo? This clears every decision, issue, comment, and audit entry and reloads the nine seed invoices.';
 
-// useShallow keeps the derived object referentially stable so useSyncExternalStore settles.
-function useStatusCounts(): Record<Status, number> {
+interface QueueSummary extends Record<Status, number> {
+  pendingTotal: number;
+  heldTotal: number;
+}
+
+// useShallow keeps the derived object referentially stable so useSyncExternalStore settles;
+// every value stays a primitive for the same reason.
+function useQueueSummary(): QueueSummary {
   return useStore(
     useShallow((s) => {
-      const counts = Object.fromEntries(STATUSES.map((status) => [status, 0])) as Record<Status, number>;
-      for (const id of s.order) counts[s.invoices[id].status] += 1;
-      return counts;
+      const summary = { ...(Object.fromEntries(STATUSES.map((status) => [status, 0])) as Record<Status, number>), pendingTotal: 0, heldTotal: 0 };
+      for (const id of s.order) {
+        const invoice = s.invoices[id];
+        summary[invoice.status] += 1;
+        if (invoice.status === 'needs_review' || invoice.status === 'flagged') summary.pendingTotal += invoice.total;
+        if (invoice.status === 'held') summary.heldTotal += invoice.total;
+      }
+      return summary;
     }),
   );
+}
+
+function wholeDollars(amount: number): string {
+  return money(Math.round(amount)).replace(/\.00$/, '');
 }
 
 function WebMCPPill() {
@@ -32,12 +47,13 @@ function WebMCPPill() {
 }
 
 export function Header() {
-  const counts = useStatusCounts();
+  const queue = useQueueSummary();
   const hydrated = useStore((s) => s.hydrated);
   const reset = useStore((s) => s.reset);
-  const summary = STATUSES.filter((status) => counts[status] > 0)
-    .map((status) => `${counts[status]} ${statusLabel(status)}`)
-    .join(' · ');
+  const parts = STATUSES.filter((status) => queue[status] > 0).map((status) => `${queue[status]} ${statusLabel(status)}`);
+  if (queue.pendingTotal > 0) parts.push(`${wholeDollars(queue.pendingTotal)} pending`);
+  if (queue.heldTotal > 0) parts.push(`${wholeDollars(queue.heldTotal)} held`);
+  const summary = parts.join(' · ');
 
   const handleResetClick = () => {
     if (window.confirm(RESET_PROMPT)) reset();

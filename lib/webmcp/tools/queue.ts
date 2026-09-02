@@ -14,11 +14,8 @@ function queueRow(invoice: InvoiceState) {
     invoice_number: invoice.invoice_number,
     vendor: vendorName(invoice),
     total: invoice.total,
-    currency: invoice.currency,
     status: invoice.status,
     open_issues: openIssues(invoice).length,
-    po_number: invoice.po_number ?? null,
-    issue_date: invoice.issue_date,
   };
 }
 

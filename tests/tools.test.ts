@@ -154,6 +154,13 @@ describe('queue tools', () => {
     expect(big.invoices).toHaveLength(1);
   });
 
+  it('lists the whole seed queue in order without hitting the output budget', async () => {
+    const all = (await run('list_invoices', { limit: 20 })) as { count: number; invoices: { id: string }[] };
+    expect(all.count).toBe(10);
+    expect(all.invoices.map((i) => i.id)).toEqual(useStore.getState().order);
+    expect(JSON.parse(clamp(all))).not.toHaveProperty('truncated');
+  });
+
   it('get_decision explains an unknown id', async () => {
     expect(await run('get_decision', { decision_id: 'dec_404' })).toEqual({ error: E.DECISION_NOT_FOUND('dec_404') });
   });

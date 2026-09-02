@@ -25,6 +25,7 @@ One line per choice the spec left open. Newest at the bottom.
 - Registered-tool count for the header pill is tracked in the store (`registeredTools`, not persisted) by `WebMCPProvider`.
 - `lib/webmcp/examples.ts` builds a ready-to-paste input per tool from the open invoice (issue fields, match findings, duplicate candidates, bank mismatch, pending decision ids) for people driving the tools by hand in Chrome's inspector. The agent never receives these; they are UI only.
 - `open_invoice` and `get_decision` return `reviewer_replies` (newest three human comments, 100 chars each) so a reply typed in the Comments tab reaches the agent without a fourteenth tool.
+- `list_invoices` rows omit `currency` (always USD), `po_number`, and `issue_date` (all returned by `open_invoice`; dates also drive `find_duplicates`): with ten invoices the full list otherwise crossed the 1,500-character output budget and `clamp` dropped rows. A test lists the whole seed queue and asserts nothing was truncated.
 - `STORE_VERSION` is 2: the tenth invoice would otherwise be missing for anyone whose browser still holds the version-1 state, and the persist migration resets to seed on a version change.
 - `scripts/gen/out/` (PDFs, logo/stamp rasters, debug overlays) is gitignored; regenerate with `python scripts/gen/generate.py && python scripts/gen/debug_overlay.py`.
 

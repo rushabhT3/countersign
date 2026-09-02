@@ -5,7 +5,7 @@ import { useStore } from '@/lib/store';
 import { STATUSES, type Status } from '@/lib/types';
 import { money, statusLabel } from '@/lib/ui/format';
 
-const RESET_PROMPT = 'Reset the demo? This clears every decision, issue, comment, and audit entry and reloads the nine seed invoices.';
+const RESET_PROMPT = 'Reset the demo? This clears every decision, issue, comment, and audit entry and reloads the ten seed invoices.';
 
 interface QueueSummary extends Record<Status, number> {
   pendingTotal: number;

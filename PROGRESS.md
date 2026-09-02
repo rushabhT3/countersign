@@ -6,4 +6,8 @@ Scaffolded with `create-next-app@16.3.4` and pinned zustand 5.0.15, zod 4.5.4, t
 
 Later the same day: MIT license added, history re-cut into layered commits, public repo at https://github.com/rushabhT3/countersign (MIT detected in About, topics set), production screenshots in `docs/`, a match-table overflow fix the screenshots exposed, and a Vercel production deploy at https://countersign-theta.vercel.app connected to the repo so every push to `main` redeploys. The live page was checked headlessly: 200, no `Origin-Agent-Cluster` header, `registerTool` in the bundle, page scans load, zero console errors.
 
-Left for the human: confirm `document.modelContext` on the live URL in ChatGPT desktop and Chrome 149+, run the nine evals and write `evals/RESULTS.md`, add the video link to the README, record the video, submit on Devpost.
+First live run in ChatGPT desktop (Free plan, GPT-5.6 Terra): site tools discovered, 4→13→4 confirmed, scenario 1 exact. Terra asked in chat before write tools; after rewording `flag_issue`, `request_countersign`, and `show_field_evidence` and adding a `review_flow` hint to `open_invoice`, a single whole-queue prompt produced 8/8 correct findings with every one of the 13 tools used and a card for each invoice (`evals/RESULTS.md`). Chrome DevTools → Application → WebMCP showed the same 13 tools with counters.
+
+Then the "make the work visible" pass: an activity feed that toasts every tool call and click over the page, a Tools tab listing all 13 tools with live/idle state, annotations, call counts, and last result, dollar totals (pending, held) in the header pill, and on the card a live "agent waiting · N s" counter, hover-to-highlight for issues, and A/H/R/Esc shortcuts. Verified headless against the production build: 4/4 → 9/9 live, toasts render, H resolves the waiting tool call, no console errors.
+
+Left for the human: video (link into README), Devpost form with the four screenshots, submit.

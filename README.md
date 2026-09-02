@@ -68,6 +68,9 @@ A remote server can read the same data, but it cannot draw a highlight on the re
 - [`lib/store.ts`](lib/store.ts) — zustand store persisted to `localStorage` under `countersign-v1`. Invoices, issues, comments, GL proposals, decisions, and the audit log.
 - [`lib/domain/`](lib/domain) — pure functions: `match.ts` (three-way match), `duplicates.ts`, `tax.ts`, `next.ts`, `approval.ts` (the Approve gate shared by the card and the tool).
 - [`components/`](components) — the workbench: queue, page viewer with fraction-based bbox overlays, inspector tabs, manual-parity actions, countersign card.
+- [`components/AgentActivity.tsx`](components/AgentActivity.tsx) — every tool call and every human click surfaces as a short-lived toast over the page, so the agent's work is visible where the reviewer is looking.
+- [`components/tabs/ToolsTab.tsx`](components/tabs/ToolsTab.tsx) — the 13 tools with live registered/idle state, read/write/untrusted badges, call counts, and last result: the DevTools WebMCP pane, inside the product, for judges without the Chrome flag.
+- The countersign card shows how long the agent has been waiting for the click (the 25-second window), highlights an issue's evidence on the scan when you hover it, and takes <kbd>A</kbd> / <kbd>H</kbd> / <kbd>R</kbd> / <kbd>Esc</kbd>.
 - [`scripts/gen/`](scripts/gen) — the Python generator that renders the invoices and records bboxes at draw time.
 
 Annotations: read tools carry `readOnlyHint`; tools that return document or vendor text carry `untrustedContentHint`. Zod 4 schemas are the single source of truth: `z.toJSONSchema` produces the advertised schema and `safeParse` validates the call.

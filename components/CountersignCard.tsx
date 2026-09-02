@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useStore, type Decision, type InvoiceState, type Issue, type ResolvedOutcome } from '@/lib/store';
 import { GL_CODES } from '@/lib/seed';
 import { approvalBlockers } from '@/lib/domain/approval';
@@ -8,7 +8,7 @@ import { escapeText } from '@/lib/domain/normalize';
 import { Chip } from '@/components/Chip';
 import { severityTone } from '@/lib/ui/tones';
 import { humanize, money } from '@/lib/ui/format';
-import { acceptGlAsHuman, logCountersign, resolveIssueAsHuman, showFieldAsHuman } from '@/lib/ui/manual';
+import { acceptGlAsHuman, logCountersign, previewField, resolveIssueAsHuman, showFieldAsHuman } from '@/lib/ui/manual';
 import { vendorName } from '@/lib/webmcp/tools/common';
 
 const WAIVE_MAX = 120;
@@ -25,6 +25,7 @@ function IssueRow({ issue, invoiceId }: { issue: Issue; invoiceId: string }) {
   const [isWaiving, setIsWaiving] = useState(false);
   const [reason, setReason] = useState('');
   const reference = issue.line ? `line ${issue.line}` : issue.field;
+  const evidenceKey = issue.field ?? (issue.line ? `line:${issue.line}:qty` : null);
 
   const handleWaiveConfirm = () => {
     if (!reason.trim()) return;
@@ -33,12 +34,15 @@ function IssueRow({ issue, invoiceId }: { issue: Issue; invoiceId: string }) {
   };
 
   return (
-    <li className={`flex flex-wrap items-center gap-2 py-1.5 text-xs ${issue.resolved ? 'text-ink-faint line-through' : ''}`}>
+    <li
+      className={`flex flex-wrap items-center gap-2 py-1.5 text-xs ${issue.resolved ? 'text-ink-faint line-through' : ''}`}
+      onMouseEnter={evidenceKey && !issue.resolved ? () => previewField(invoiceId, evidenceKey) : undefined}
+    >
       <Chip tone={severityTone(issue.severity)}>{issue.severity}</Chip>
       <span className="font-medium">{humanize(issue.type)}</span>
       <span className="min-w-0 flex-1 break-words">{escapeText(issue.message)}</span>
-      {reference && !issue.resolved && (
-        <button type="button" className="font-mono text-[11px] text-amber-900 hover:underline" onClick={() => showFieldAsHuman(invoiceId, issue.field ?? `line:${issue.line}:qty`)}>
+      {reference && evidenceKey && !issue.resolved && (
+        <button type="button" className="font-mono text-[11px] text-amber-900 hover:underline" onClick={() => showFieldAsHuman(invoiceId, evidenceKey)}>
           {reference}
         </button>
       )}
@@ -140,22 +144,61 @@ function GlProposals({ invoice }: { invoice: InvoiceState }) {
   );
 }
 
+const COUNTERSIGN_WAIT_S = 25;
+const SHORTCUTS: Record<string, ResolvedOutcome> = { a: 'approved', h: 'held', r: 'rejected', escape: 'dismissed' };
+
+function useWaitingSeconds(requestedAt: number | undefined): number {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (requestedAt === undefined) return;
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [requestedAt]);
+  return requestedAt === undefined ? 0 : Math.max(0, Math.floor((now - requestedAt) / 1000));
+}
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  return target instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName);
+}
+
+function useCountersignShortcuts(isActive: boolean, canApprove: boolean, decide: (outcome: ResolvedOutcome) => void) {
+  useEffect(() => {
+    if (!isActive) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isTypingTarget(event.target) || event.metaKey || event.ctrlKey || event.altKey) return;
+      const outcome = SHORTCUTS[event.key.toLowerCase()];
+      if (!outcome || (outcome === 'approved' && !canApprove)) return;
+      event.preventDefault();
+      decide(outcome);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isActive, canApprove, decide]);
+}
+
 export function CountersignCard() {
   const invoice = useStore((s) => (s.openInvoiceId ? s.invoices[s.openInvoiceId] : null));
   const decision = useStore((s) =>
     invoice ? Object.values(s.decisions).find((d) => d.invoice_id === invoice.id && d.outcome === 'pending') ?? null : null,
   );
   const resolveDecision = useStore((s) => s.resolveDecision);
+  const blockers = invoice ? approvalBlockers(invoice) : [];
+  const waitingSeconds = useWaitingSeconds(decision?.requested_at);
+
+  // The only place in the app that can produce an approved invoice: a reviewer's click (or key) here.
+  const handleDecision = useCallback(
+    (outcome: ResolvedOutcome) => {
+      if (!invoice || !decision) return;
+      resolveDecision(decision.id, outcome);
+      logCountersign(decision.id, invoice.id, outcome);
+    },
+    [invoice, decision, resolveDecision],
+  );
+  useCountersignShortcuts(decision !== null, blockers.length === 0, handleDecision);
+
   if (!invoice || !decision) return null;
-
-  const blockers = approvalBlockers(invoice);
   const showGl = invoice.match_result?.result !== 'match' || invoice.gl_proposals.length > 0;
-
-  // The only place in the app that can produce an approved invoice: a reviewer's click here.
-  const handleDecision = (outcome: ResolvedOutcome) => {
-    resolveDecision(decision.id, outcome);
-    logCountersign(decision.id, invoice.id, outcome);
-  };
+  const isAgentWaiting = decision.requested_by === 'agent' && waitingSeconds < COUNTERSIGN_WAIT_S;
 
   return (
     <section
@@ -166,8 +209,13 @@ export function CountersignCard() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-4">
         <div className="flex flex-wrap items-start gap-6">
           <div className="min-w-0 flex-1">
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">
-              {decision.requested_by === 'agent' ? 'Agent requests' : 'You requested'}
+            <div className="flex flex-wrap items-baseline gap-x-3 text-[11px] font-semibold uppercase tracking-wider text-ink-muted">
+              <span>{decision.requested_by === 'agent' ? 'Agent requests' : 'You requested'}</span>
+              {decision.requested_by === 'agent' && (
+                <span className="font-mono font-normal normal-case tracking-normal text-ink-faint">
+                  {isAgentWaiting ? `agent waiting for your click · ${waitingSeconds} s` : 'agent moved on; it polls get_decision for your answer'}
+                </span>
+              )}
             </div>
             <div className={`text-3xl font-semibold uppercase tracking-tight ${ACTION_CLASSES[decision.requested_action]}`}>{decision.requested_action}</div>
             <p className="mt-1 max-w-2xl text-sm">{escapeText(decision.rationale)}</p>
@@ -199,16 +247,16 @@ export function CountersignCard() {
             onClick={() => handleDecision('approved')}
             className="rounded-md bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-600"
           >
-            Approve
+            Approve <kbd className="ml-1 rounded bg-white/25 px-1 font-mono text-[10px] font-normal">A</kbd>
           </button>
           <button type="button" onClick={() => handleDecision('held')} className="rounded-md bg-yellow-300 px-4 py-2 text-sm font-semibold text-yellow-950 hover:bg-yellow-400">
-            Hold
+            Hold <kbd className="ml-1 rounded bg-black/10 px-1 font-mono text-[10px] font-normal">H</kbd>
           </button>
           <button type="button" onClick={() => handleDecision('rejected')} className="rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
-            Reject
+            Reject <kbd className="ml-1 rounded bg-white/25 px-1 font-mono text-[10px] font-normal">R</kbd>
           </button>
           <button type="button" onClick={() => handleDecision('dismissed')} className="rounded-md border border-line px-4 py-2 text-sm font-medium text-ink-muted hover:border-line-strong">
-            Dismiss
+            Dismiss <kbd className="ml-1 rounded bg-black/5 px-1 font-mono text-[10px] font-normal">Esc</kbd>
           </button>
           <span className="ml-auto text-xs text-ink-muted">
             {blockers.length > 0 ? `Approve is disabled: ${blockers.join(', ')}.` : 'No blockers. Approving records your click in the audit log.'}

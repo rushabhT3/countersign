@@ -39,6 +39,14 @@ export function showFieldAsHuman(invoiceId: string, field: string): void {
   logHumanAction('show_field_evidence', invoiceId, { field }, `Highlighted ${field} = ${evidence.value}.`);
 }
 
+// Hover preview: moves the highlight without writing an audit row, so a glance is not a "click".
+export function previewField(invoiceId: string, field: string): void {
+  const state = useStore.getState();
+  const evidence = resolveField(state.invoices[invoiceId], field);
+  if (!evidence) return;
+  state.setHighlight({ invoice_id: invoiceId, field, page: evidence.page, bbox: evidence.bbox, nonce: Date.now() });
+}
+
 export function runMatchAsHuman(invoiceId: string): void {
   const state = useStore.getState();
   const invoice = state.invoices[invoiceId];
